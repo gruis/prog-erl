@@ -9,3 +9,10 @@ sum([H|T],N) -> sum(T, H+N).
 map(_, [])    -> [];
 map(C, [H|T]) -> [map(C, H)|map(C, T)];
 map(C, E)     -> C(E).
+
+filter(_, []) -> [];
+filter(C, [H|T]) -> 
+  case C(H) of
+    true -> [H|filter(C,T)];
+    false -> filter(C,T)
+  end.
