@@ -2,9 +2,8 @@
 %-export([sum/1, sum/2]).
 -compile(export_all).
 
-sum(L)       -> sum(L, 0).
-sum([], N)   -> N;
-sum([H|T],N) -> sum(T, H+N).
+sum([H|T]) -> H + sum(T);
+sum([]) -> 0.
 
 map(_, [])    -> [];
 map(C, [H|T]) -> [C(H)|map(C, T)].
