@@ -30,6 +30,10 @@ filter2(C, [H|T]) ->
 filter3(C, L) ->
   [X || X <- L, C(X)].
 
+% filter4(C, [H|T]) when C(H) -> [H|filter4(T)];
+% filter4(C, [H|T]) -> filter4(C,T).
+
+
 %% Split list into Pivot and T; split T into two lists: those items
 %% that are less than Pivot and those that are greater than Pivot. 
 %% Call qsort on each list then join the lists with Pivot in the middle.
@@ -56,3 +60,33 @@ pythag(N) ->
       A + B + C =< N,
       A*A+B*B =:= C*C
   ].
+
+perms([]) -> [[]];
+perms(L) -> [[H|T] || H <- L, T <- perms(L--[H])].
+
+
+%% If X is greater than Y then X is the max. If not then the first 
+%% clause will not match, so the answer is Y.
+max(X,Y) when X > Y -> X;
+max(_,Y) -> Y.
+
+
+%% Split a list into two, one with even numbers the other with odd numbers.
+%% Each list will be in reverse order.
+%%  56> lib_misc:odds_and_evens([1,2,3,4]).
+%%  {[3,1],[4,2]}
+%%  57> (fun({X,Y}) -> {lists:reverse(X), lists:reverse(Y)} end)(lib_misc:odds_and_evens([1,2,3,4])).
+%%  {[1,3],[2,4]}
+odds_and_evens(L) ->
+  odds_and_evens(L, [], []).
+odds_and_evens([H|T], Odds, Evens) ->
+  case (H rem 2) of
+    0 -> odds_and_evens(T, Odds, [H|Evens]);
+    1 -> odds_and_evens(T, [H|Odds], Evens)
+  end;
+odds_and_evens([], Odds, Evens) ->
+  {Odds, Evens}.
+
+sqrt(X) when X < 0 ->
+  erlang:error({squareRootNegativeArgument, X});
+sqrt(X) -> math:sqrt(X).
