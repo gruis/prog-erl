@@ -8,6 +8,7 @@ sum([]) -> 0.
 map(C, L) ->
   [C(I) || I <- L].
 
+%% Filter using case statements
 filter(_, []) -> [];
 filter(C, [H|T]) -> 
   case C(H) of
@@ -15,7 +16,7 @@ filter(C, [H|T]) ->
     false -> filter(C,T)
   end.
 
-
+%% Filter using if statements
 filter2(_, []) -> [];
 filter2(C, [H|T]) ->
   Val = C(H),
@@ -24,6 +25,10 @@ filter2(C, [H|T]) ->
      true ->
         filter2(C,T)
   end.
+
+%% Filter using list comprehension
+filter3(C, L) ->
+  [X || X <- L, C(X)].
 
 %% Split list into Pivot and T; split T into two lists: those items
 %% that are less than Pivot and those that are greater than Pivot. 
@@ -42,3 +47,12 @@ qsort([Pivot|T]) ->
   qsort([X || X <- T, X < Pivot])
   ++ [Pivot] ++
   qsort([X || X <- T, X >= Pivot]).
+
+pythag(N) ->
+  [ {A,B,C} || 
+      A <- lists:seq(1,N),
+      B <- lists:seq(1,N),
+      C <- lists:seq(1,N),
+      A + B + C =< N,
+      A*A+B*B =:= C*C
+  ].
