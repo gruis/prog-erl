@@ -5,9 +5,8 @@
 sum([H|T]) -> H + sum(T);
 sum([]) -> 0.
 
-map(_, [])    -> [];
-map(C, [H|T]) -> [C(H)|map(C, T)].
-
+map(C, L) ->
+  [C(I) || I <- L].
 
 filter(_, []) -> [];
 filter(C, [H|T]) -> 

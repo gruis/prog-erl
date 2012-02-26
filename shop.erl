@@ -10,6 +10,6 @@ cost(milk)      -> 7.
 
 
 total(L) ->
-  sum(map(fun({Item, N}) -> cost(Item) * N end, L)).
+  sum([cost(I) * N || {I,N} <- L]).
 
 version() -> "0.0.1".
